@@ -1,0 +1,40 @@
+{
+  "name": "dna.tech",
+  "version": "1.0.0",
+  "description": "dna.tech counter site",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack",
+    "dev": "webpack serve",
+    "profile": "NODE_ENV=profile webpack",
+    "start": "npm run dev"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^10.3.1",
+    "babel-loader": "^8.2.2",
+    "clean-webpack-plugin": "^4.0.0-alpha.0",
+    "copy-webpack-plugin": "^9.0.1",
+    "css-loader": "^6.2.0",
+    "favicons-webpack-plugin": "^5.0.2",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.3.2",
+    "image-webpack-loader": "^7.0.1",
+    "imagemin-webp-webpack-plugin": "^3.3.6",
+    "mini-css-extract-plugin": "^2.1.0",
+    "node-sass": "^6.0.1",
+    "postcss-csso": "^5.0.1",
+    "postcss-loader": "^6.1.1",
+    "postcss-sort-media-queries": "^3.11.12",
+    "purgecss-webpack-plugin": "^4.0.3",
+    "sass-loader": "^12.1.0",
+    "style-loader": "^3.2.1",
+    "svg-sprite-loader": "^6.0.9",
+    "svgo-loader": "^3.0.0",
+    "webpack": "^5.46.0",
+    "webpack-bundle-analyzer": "^4.4.2",
+    "webpack-cli": "^4.7.2",
+    "webpack-dev-server": "^3.11.2"
+  }
+}
