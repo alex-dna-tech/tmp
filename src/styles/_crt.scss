@@ -1,56 +1,16 @@
+.shadow {
+  filter: drop-shadow($shadow-glow);
+}
+
 #crt {
   position: relative;
   z-index: 10;
-  background: $chassis-background;
-  width: 1280px;
-  height: 900px;
-  max-width: 1280px;
-  max-height: 1024px;
-  border-radius: $base-unit;
-  box-shadow: inset 0.25em 0.25em 2px rgba(255, 255, 255, 0.4),
-    inset -0.25em -0.25em 2px rgba(0, 0, 0, 0.4);
   user-select: none;
   font-size: $font-size;
-  transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
-  perspective: 1000;
 }
 
-#screen {
-  position: relative;
-  z-index: 20;
-  width: calc(100% - #{$chassis-margin});
-  height: calc(100% - #{$chassis-margin});
-  margin-top: $chassis-margin / 2;
-  margin-left: $chassis-margin / 2;
-  background: #000;
-  border-radius: $base-unit;
-  overflow: hidden;
-  box-shadow: 0 0 1px 3px rgba(10, 10, 10, 0.7);
-
-  &::before {
-    @include fill();
-
-    content: '';
-    z-index: 70;
-    box-shadow: inset 0 0 $base-unit ($base-unit / 2) rgba(#fff, 0.08);
-    border-radius: $base-unit;
-  }
-
-  &::after {
-    @include fill();
-
-    content: '';
-    z-index: 60;
-    opacity: 0.1;
-    background: linear-gradient(
-      rgba(255, 255, 255, 0.8),
-      rgba(255, 255, 255, 0.2)
-    );
-  }
-}
-
-#wrapper {
+.wrapper {
   @include fill();
 
   z-index: 30;
@@ -87,7 +47,7 @@
   }
 }
 
-#interlace {
+.interlace {
   @include fill();
 
   z-index: 21;
@@ -97,13 +57,8 @@
   background-repeat: repeat-y;
 }
 
-#envelope {
-  @include fill(
-    $envelope-margin,
-    $envelope-margin,
-    $envelope-margin,
-    $envelope-margin
-  );
+.envelope {
+  @include fill();
 
   z-index: 40;
   border-radius: $base-unit / 2;
@@ -111,7 +66,7 @@
   animation: skew 5s linear infinite;
 }
 
-#scanline {
+.scanline {
   position: absolute;
   top: 0;
   left: 0;
@@ -122,7 +77,7 @@
   animation: scanline 1.25s linear infinite;
 }
 
-#terminal {
+.terminal {
   position: relative;
   width: 100%;
   height: 100%;
