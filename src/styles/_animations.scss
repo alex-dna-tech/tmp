@@ -8,35 +8,13 @@
   }
 }
 
-@keyframes skew {
-  0% {
-    transform: skewX(0.5deg);
-  }
-
-  8% {
-    transform: skewX(1deg) scale(1.0001);
-  }
-
-  15% {
-    transform: skewX(0.6deg) skewY(-0.05deg);
-  }
-
-  30% {
-    transform: skewX(0.6deg);
-  }
-
-  100% {
-    transform: skewX(0.1deg);
-  }
-}
-
 @keyframes pulse {
   0% {
     transform: scale(1);
   }
 
   50% {
-    transform: scale(1.005);
+    transform: scale(1.01);
   }
 
   100% {

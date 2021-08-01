@@ -2,79 +2,22 @@
   filter: drop-shadow($shadow-glow);
 }
 
-#crt {
-  position: relative;
-  z-index: 10;
-  user-select: none;
-  font-size: $font-size;
-  backface-visibility: hidden;
-}
-
-.wrapper {
-  @include fill();
-
-  z-index: 30;
-  transform-origin: 50% 50%;
-  transform: skewX(0.5deg);
-  animation: pulse 5s linear infinite;
-
-  &::before {
-    @include fill();
-
-    content: '';
-    z-index: 31;
-    background: radial-gradient(
-      ellipse at center,
-      rgba($gradient-bottom, 0) 0%,
-      rgba($gradient-bottom, 0.5) 100%
-    );
-    pointer-events: none;
-  }
-
-  &::after {
-    @include fill();
-
-    content: '';
-    z-index: 32;
-    opacity: 0.5;
-    background: radial-gradient(
-      ellipse at center,
-      rgba($gradient-inner, 1) 0%,
-      rgba($gradient-inner, 0) 100%
-    );
-    pointer-events: none;
-    animation: glow 2s linear infinite;
-  }
-}
-
 .interlace {
   @include fill();
-
-  z-index: 21;
+  z-index: 101;
   opacity: 0.25;
   background: $interlace-background;
   background-size: 100% $interlace-size;
   background-repeat: repeat-y;
-}
-
-.envelope {
-  @include fill();
-
-  z-index: 40;
-  border-radius: $base-unit / 2;
-  background: $envelope-background;
-  animation: skew 5s linear infinite;
+  pointer-events: none;
 }
 
 .scanline {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+  @include fill();
   height: $base-unit;
   opacity: 0.1;
   background: $scanline-background;
-  animation: scanline 1.25s linear infinite;
+  animation: scanline 5s linear infinite;
 }
 
 .terminal {

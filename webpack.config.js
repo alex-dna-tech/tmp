@@ -25,7 +25,7 @@ const CONF = {
     whitelist: [/^fp-/]
   },
   entry: {
-    index: 'index.js'
+    main: 'main.js'
   },
   src: 'src',
   dist: 'dist',
@@ -33,11 +33,8 @@ const CONF = {
   copy: [
     {
       from: 'images',
-      to: 'images'
-    },
-    {
-      from: 'fonts',
-      to: 'fonts'
+      to: 'images',
+      globOptions: { ignore: ['**/.DS_Store'] }
     }
   ]
 }
