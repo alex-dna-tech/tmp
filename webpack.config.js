@@ -13,8 +13,8 @@ const SpriteLoaderPlugin = require('svg-sprite-loader/plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const PurgeCssPlugin = require('purgecss-webpack-plugin')
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
-  .BundleAnalyzerPlugin
+const BundleAnalyzerPlugin =
+  require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 const CONF = {
   mobileFirst: true,
@@ -22,10 +22,10 @@ const CONF = {
   purgeCSS: {
     active: true,
     src: '**/*.html',
-    whitelist: [/^fp-/],
+    whitelist: [/^fp-/]
   },
   entry: {
-    index: 'index.js',
+    index: 'index.js'
   },
   src: 'src',
   dist: 'dist',
@@ -33,19 +33,20 @@ const CONF = {
   copy: [
     {
       from: 'images',
-      to: 'images',
+      to: 'images'
     },
     {
       from: 'fonts',
-      to: 'fonts',
-    },
-  ],
+      to: 'fonts'
+    }
+  ]
 }
 
 module.exports = (__ = {}, argv) => {
   const isDEV =
     process.env.NODE_ENV === 'development' || argv.mode === 'development'
 
+  console.log('isDEV: ' + isDEV)
   return {
     mode: isDEV ? 'development' : 'production',
     devtool: isDEV ? 'eval-cheap-source-map' : false,
@@ -53,20 +54,19 @@ module.exports = (__ = {}, argv) => {
     entry: CONF.entry,
     output: {
       path: path.join(__dirname, CONF.dist),
-      filename: isDEV ? '[name].js' : '[name].[chunkhash].js',
+      filename: isDEV ? '[name].js' : '[name].[chunkhash].js'
     },
-    watch: isDEV,
     devServer: {
       host: '0.0.0.0',
       port: 9090,
-      overlay: true,
+      overlay: true
     },
     resolve: {
       extensions: ['.js', '.json'],
       modules: [
         path.join(__dirname, 'node_modules'),
-        path.join(__dirname, CONF.src),
-      ],
+        path.join(__dirname, CONF.src)
+      ]
     },
     optimization: {
       minimize: !isDEV,
@@ -77,21 +77,21 @@ module.exports = (__ = {}, argv) => {
           defaultVendors: {
             test: /[\\/]node_modules[\\/]/,
             priority: -10,
-            reuseExistingChunk: true,
+            reuseExistingChunk: true
           },
           default: {
             minChunks: 2,
             priority: -20,
-            reuseExistingChunk: true,
-          },
-        },
+            reuseExistingChunk: true
+          }
+        }
       },
       minimizer: [
         new TerserPlugin({
           parallel: true,
-          terserOptions: {},
-        }),
-      ],
+          terserOptions: {}
+        })
+      ]
     },
     plugins: (() => {
       const common = [
@@ -100,14 +100,14 @@ module.exports = (__ = {}, argv) => {
         new SpriteLoaderPlugin(),
         new FaviconsWebpackPlugin({
           logo: CONF.logo,
-          inject: true,
+          inject: true
         }),
         new webpack.ProvidePlugin({
           $: 'jquery',
           jQuery: 'jquery',
           'window.jQuery': 'jquery',
-          Popper: ['popper.js', 'default'],
-        }),
+          Popper: ['popper.js', 'default']
+        })
       ]
 
       for (const file of glob.sync(path.join(__dirname, CONF.pages))) {
@@ -118,7 +118,7 @@ module.exports = (__ = {}, argv) => {
             filename: path.join(__dirname, CONF.dist, `${name}.html`),
             chunks: [name],
             inject: isDEV ? 'head' : 'body',
-            minify: !isDEV,
+            minify: !isDEV
           })
         )
       }
@@ -129,14 +129,14 @@ module.exports = (__ = {}, argv) => {
           filename: isDEV ? '[name].css' : '[name].[contenthash].css',
           chunkFilename: isDEV
             ? '[name].[id].css'
-            : '[name].[id].[contenthash].css',
-        }),
+            : '[name].[id].[contenthash].css'
+        })
       ]
 
       if (CONF.purgeCSS.active) {
         new PurgeCssPlugin({
           paths: glob.sync(`${CONF.src}/${CONF.purgeCSS.src}`, { nodir: true }),
-          whitelistPatterns: CONF.purgeCSS.whitelist,
+          whitelistPatterns: CONF.purgeCSS.whitelist
         })
       }
       if (process.env.NODE_ENV === 'profile') {
@@ -153,11 +153,11 @@ module.exports = (__ = {}, argv) => {
         {
           test: /\.js$/,
           exclude: /node_modules/,
-          loader: 'babel-loader',
+          loader: 'babel-loader'
         },
         {
           test: /\.glsl$/,
-          loader: 'raw-loader',
+          loader: 'raw-loader'
         },
         {
           test: /\.s?css$/,
@@ -173,20 +173,19 @@ module.exports = (__ = {}, argv) => {
                     csso,
                     autoprefixer,
                     smqueries({
-                      sort: CONF.mobileFirst ? 'mobile-first' : 'desktop-first',
-                    }),
-                  ],
-                },
-              },
+                      sort: CONF.mobileFirst ? 'mobile-first' : 'desktop-first'
+                    })
+                  ]
+                }
+              }
             },
-            { loader: 'sass-loader', options: { sourceMap: isDEV } },
-          ],
+            { loader: 'sass-loader', options: { sourceMap: isDEV } }
+          ]
         },
         {
           test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?(\?[\s\S]+)?$/,
           include: /fonts/,
-          use:
-            'file-loader?name=[name].[ext]&outputPath=fonts/&publicPath=/fonts/',
+          use: 'file-loader?name=[name].[ext]&outputPath=fonts/&publicPath=/fonts/'
         },
         {
           test: /\.(jpe?g|png|gif)$/i,
@@ -198,21 +197,21 @@ module.exports = (__ = {}, argv) => {
                 bypassOnDebug: true,
                 mozjpeg: {
                   progressive: true,
-                  quality: 65,
+                  quality: 65
                 },
                 optipng: {
-                  enabled: true,
+                  enabled: true
                 },
                 pngquant: {
                   quality: '65-90',
-                  speed: 4,
+                  speed: 4
                 },
                 gifsicle: {
-                  interlaced: false,
-                },
-              },
-            },
-          ],
+                  interlaced: false
+                }
+              }
+            }
+          ]
         },
         {
           test: /\.svg$/,
@@ -223,13 +222,13 @@ module.exports = (__ = {}, argv) => {
               options: {
                 extract: true,
                 spriteFilename: (svgPath) =>
-                  `sprite~${path.dirname(svgPath).split(path.sep).pop()}.svg`,
-              },
+                  `sprite~${path.dirname(svgPath).split(path.sep).pop()}.svg`
+              }
             },
-            'svgo-loader',
-          ],
-        },
-      ],
-    },
+            'svgo-loader'
+          ]
+        }
+      ]
+    }
   }
 }
