@@ -98,13 +98,13 @@ module.exports = (__ = {}, argv) => {
         new FaviconsWebpackPlugin({
           logo: CONF.logo,
           inject: true
-        }),
-        new webpack.ProvidePlugin({
-          $: 'jquery',
-          jQuery: 'jquery',
-          'window.jQuery': 'jquery',
-          Popper: ['popper.js', 'default']
         })
+        // new webpack.ProvidePlugin({
+        //   $: 'jquery',
+        //   jQuery: 'jquery',
+        //   'window.jQuery': 'jquery',
+        //   Popper: ['popper.js', 'default']
+        // })
       ]
 
       for (const file of glob.sync(path.join(__dirname, CONF.pages))) {
@@ -113,7 +113,6 @@ module.exports = (__ = {}, argv) => {
           new HtmlWebpackPlugin({
             template: file,
             filename: path.join(__dirname, CONF.dist, `${name}.html`),
-            chunks: [name],
             inject: isDEV ? 'head' : 'body',
             minify: !isDEV
           })
@@ -153,10 +152,6 @@ module.exports = (__ = {}, argv) => {
           loader: 'babel-loader'
         },
         {
-          test: /\.glsl$/,
-          loader: 'raw-loader'
-        },
-        {
           test: /\.s?css$/,
           use: [
             isDEV ? 'style-loader' : MiniCssExtractPlugin.loader,
@@ -180,7 +175,7 @@ module.exports = (__ = {}, argv) => {
           ]
         },
         {
-          test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?(\?[\s\S]+)?$/,
+          test: /\.(woff(2)?)(\?v=\d+\.\d+\.\d+)?(\?[\s\S]+)?$/,
           include: /fonts/,
           use: 'file-loader?name=[name].[ext]&outputPath=fonts/&publicPath=/fonts/'
         },
