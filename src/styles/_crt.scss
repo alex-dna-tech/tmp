@@ -3,7 +3,7 @@
 }
 
 .interlace {
-  @include fill();
+  @include fit();
   z-index: 101;
   opacity: 0.25;
   background: $interlace-background;
@@ -13,38 +13,17 @@
 }
 
 .scanline {
-  @include fill();
+  @include fit();
   height: $base-unit;
   opacity: 0.1;
   background: $scanline-background;
   animation: scanline 5s linear infinite;
 }
 
-.terminal {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  z-index: 50;
-
-  textarea {
-    display: block;
-    background: transparent;
-    resize: none;
-    width: 100%;
-    height: 100%;
-    border: 0 none;
-    outline: 0 none;
-    box-sizing: border-box;
-    pointer-events: none;
-    margin: 0;
-    overflow: hidden;
-    padding: $base-unit;
-    color: $output-color;
-    text-shadow: 0 0 2px $output-text-shadow;
-    font-family: $output-font-family;
-    font-size: inherit;
-    animation: blur 5s linear infinite;
-    line-height: $output-line-height;
-    white-space: pre-wrap;
-  }
+.glitch {
+  @include svgGlitch('glitch', 30, white, red, red, 800, 800);
 }
+
+// pre#printer {
+//   width: 1200px;
+// }

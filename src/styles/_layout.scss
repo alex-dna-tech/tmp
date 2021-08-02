@@ -11,6 +11,28 @@ body {
   text-shadow: $shadow-glow;
 }
 
+* {
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: 1280px;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex > * {
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.flex pre {
+  width: 982px;
+  margin: 0 auto;
+}
+
 .screen {
   height: 100vh;
   padding: 2rem;
@@ -22,7 +44,7 @@ body {
   background-color: #000;
 
   &::after {
-    @include fill();
+    @include fit();
     content: '';
     z-index: 112;
     opacity: 0.5;
@@ -36,7 +58,7 @@ body {
   }
 
   &::before {
-    @include fill();
+    @include fit();
     content: '';
     z-index: 111;
     background: radial-gradient(

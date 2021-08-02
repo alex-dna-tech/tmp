@@ -23,10 +23,57 @@ $output-line-height: 1.25;
 $gradient-bottom: rgb(0, 30, 30);
 $gradient-inner: #0f7;
 
-@mixin fill($top: 0, $left: 0, $right: 0, $bottom: 0) {
+@mixin fit($top: 0, $left: 0, $right: 0, $bottom: 0) {
   position: absolute;
   left: $left;
   top: $top;
   right: $right;
   bottom: $bottom;
+}
+
+@mixin svgGlitch(
+  $name,
+  $intensity,
+  $fillColor,
+  $fillHighlight1,
+  $fillHighlight2,
+  $width,
+  $height
+) {
+  $steps: $intensity;
+
+  // Ensure the @keyframes are generated at the root level
+  @at-root {
+    // We need two different ones
+    @for $i from 1 through 2 {
+      @keyframes #{$name}-anim-#{$i} {
+        @for $i from 0 through $steps {
+          $top: random(100);
+          $bottom: random(101 - $top);
+          #{percentage($i*(1/$steps))} {
+            clip-path: inset(#{$top}% 0 #{$bottom}% 0);
+          }
+        }
+      }
+    }
+  }
+
+  svg {
+    fill: $fillColor;
+    width: $width + px;
+    height: $height + px;
+  }
+  svg:nth-child(2),
+  svg:nth-child(3) {
+  }
+  svg:nth-child(2) {
+    fill: $fillHighlight1;
+    left: -2px;
+    animation: #{$name}-anim-1 2s infinite linear alternate-reverse;
+  }
+  svg:nth-child(3) {
+    fill: $fillHighlight2;
+    left: 2px;
+    animation: #{$name}-anim-2 3s infinite linear alternate-reverse;
+  }
 }
