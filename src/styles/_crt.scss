@@ -15,7 +15,7 @@
 .scanline {
   @include fit();
   height: $base-unit;
-  opacity: 0.1;
+  opacity: 0.2;
   background: $scanline-background;
   animation: scanline 5s linear infinite;
 }
