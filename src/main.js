@@ -9,7 +9,7 @@ const load = () => {
     fadeOut: true,
     fadeOutDelay: 0,
     loop: true,
-    showCursor: false,
+    showCursor: true,
     cursorChar: '&nbsp;#',
     preStringTyped: (pos, self) => {
       console.log(pos)
