@@ -4,39 +4,19 @@ const glob = require('glob')
 const csso = require('postcss-csso')
 const autoprefixer = require('autoprefixer')
 const smqueries = require('postcss-sort-media-queries')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const ImageminWebpWebpackPlugin = require('imagemin-webp-webpack-plugin')
-const SpriteLoaderPlugin = require('svg-sprite-loader/plugin')
 const TerserPlugin = require('terser-webpack-plugin')
-const PurgeCssPlugin = require('purgecss-webpack-plugin')
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
-const BundleAnalyzerPlugin =
-  require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 const CONF = {
-  mobileFirst: true,
-  pages: 'src/*.html',
-  purgeCSS: {
-    active: true,
-    src: '**/*.html',
-    whitelist: [/^fp-/]
-  },
+  mobileFirst: false,
   entry: {
     main: 'main.js'
   },
   src: 'src',
   dist: 'dist',
-  logo: 'logo/logo.svg',
-  copy: [
-    {
-      from: 'images',
-      to: 'images',
-      globOptions: { ignore: ['**/.DS_Store'] }
-    }
-  ]
+  logo: 'logo/logo.svg'
 }
 
 module.exports = (__ = {}, argv) => {
@@ -51,7 +31,9 @@ module.exports = (__ = {}, argv) => {
     entry: CONF.entry,
     output: {
       path: path.join(__dirname, CONF.dist),
-      filename: isDEV ? '[name].js' : '[name].[chunkhash].js'
+      filename: isDEV ? '[name].js' : '[name].[chunkhash].js',
+      assetModuleFilename: 'assets/[name].[ext]',
+      clean: true
     },
     devServer: {
       host: '0.0.0.0',
@@ -66,61 +48,23 @@ module.exports = (__ = {}, argv) => {
       ]
     },
     optimization: {
-      minimize: !isDEV,
-      emitOnErrors: true,
-      splitChunks: {
-        chunks: 'all',
-        cacheGroups: {
-          defaultVendors: {
-            test: /[\\/]node_modules[\\/]/,
-            priority: -10,
-            reuseExistingChunk: true
-          },
-          default: {
-            minChunks: 2,
-            priority: -20,
-            reuseExistingChunk: true
-          }
-        }
-      },
-      minimizer: [
-        new TerserPlugin({
-          parallel: true,
-          terserOptions: {}
-        })
-      ]
+      minimize: !isDEV
     },
     plugins: (() => {
       const common = [
-        new CopyWebpackPlugin({ patterns: CONF.copy }),
-        new ImageminWebpWebpackPlugin(),
-        new SpriteLoaderPlugin(),
+        new HtmlWebpackPlugin({
+          template: path.join(__dirname, CONF.src, 'index.html'),
+          filename: path.join(__dirname, CONF.dist, 'index.html'),
+          inject: isDEV ? 'head' : true,
+          minify: !isDEV
+        }),
         new FaviconsWebpackPlugin({
           logo: CONF.logo,
           inject: true
         })
-        // new webpack.ProvidePlugin({
-        //   $: 'jquery',
-        //   jQuery: 'jquery',
-        //   'window.jQuery': 'jquery',
-        //   Popper: ['popper.js', 'default']
-        // })
       ]
 
-      for (const file of glob.sync(path.join(__dirname, CONF.pages))) {
-        const name = path.parse(file).name
-        common.push(
-          new HtmlWebpackPlugin({
-            template: file,
-            filename: path.join(__dirname, CONF.dist, `${name}.html`),
-            inject: isDEV ? 'head' : 'body',
-            minify: !isDEV
-          })
-        )
-      }
-
       const production = [
-        new CleanWebpackPlugin(),
         new MiniCssExtractPlugin({
           filename: isDEV ? '[name].css' : '[name].[contenthash].css',
           chunkFilename: isDEV
@@ -128,16 +72,6 @@ module.exports = (__ = {}, argv) => {
             : '[name].[id].[contenthash].css'
         })
       ]
-
-      if (CONF.purgeCSS.active) {
-        new PurgeCssPlugin({
-          paths: glob.sync(`${CONF.src}/${CONF.purgeCSS.src}`, { nodir: true }),
-          whitelistPatterns: CONF.purgeCSS.whitelist
-        })
-      }
-      if (process.env.NODE_ENV === 'profile') {
-        production.push(new BundleAnalyzerPlugin())
-      }
 
       const development = []
 
@@ -174,51 +108,11 @@ module.exports = (__ = {}, argv) => {
             { loader: 'sass-loader', options: { sourceMap: isDEV } }
           ]
         },
-        {
-          test: /\.(woff(2)?)(\?v=\d+\.\d+\.\d+)?(\?[\s\S]+)?$/,
-          include: /fonts/,
-          use: 'file-loader?name=[name].[ext]&outputPath=fonts/&publicPath=/fonts/'
-        },
-        {
-          test: /\.(jpe?g|png|gif)$/i,
-          use: [
-            'file-loader?name=images/[name].[ext]',
-            {
-              loader: 'image-webpack-loader',
-              options: {
-                bypassOnDebug: true,
-                mozjpeg: {
-                  progressive: true,
-                  quality: 65
-                },
-                optipng: {
-                  enabled: true
-                },
-                pngquant: {
-                  quality: '65-90',
-                  speed: 4
-                },
-                gifsicle: {
-                  interlaced: false
-                }
-              }
-            }
-          ]
-        },
+        { test: /\.html$/, use: [{ loader: 'html-loader' }] },
         {
           test: /\.svg$/,
-          include: /icons/,
-          use: [
-            {
-              loader: 'svg-sprite-loader',
-              options: {
-                extract: true,
-                spriteFilename: (svgPath) =>
-                  `sprite~${path.dirname(svgPath).split(path.sep).pop()}.svg`
-              }
-            },
-            'svgo-loader'
-          ]
+          type: 'asset/inline',
+          use: ['svgo-loader']
         }
       ]
     }

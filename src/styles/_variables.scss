@@ -1,9 +1,7 @@
 $background-color: #000;
 $color: #fff;
 $base-unit: 25rem;
-$font-size: 20px;
-$chassis-background: #7b8e78;
-$chassis-margin: $base-unit * 3;
+$font-size: 1.5rem;
 $interlace-background: linear-gradient(#777 50%, #000 50%);
 $interlace-size: 5px;
 $scanline-background: linear-gradient(
@@ -14,8 +12,8 @@ $scanline-background: linear-gradient(
   transparent 100%
 );
 $shadow-glow: 0 0 4px #c8c8c8;
-$output-font-family: 'chakrapetch';
-$output-color: #18ff62;
+$output-font-family: 'Chakra Petch';
+$output-color: rgba(24, 255, 98, 1);
 $output-text-shadow: rgba(10, 255, 10, 0.8);
 $output-line-height: 1.25;
 $gradient-bottom: rgb(0, 30, 30);
@@ -27,51 +25,4 @@ $gradient-inner: #0f7;
   top: $top;
   right: $right;
   bottom: $bottom;
-}
-
-@mixin svgGlitch(
-  $name,
-  $intensity,
-  $fillColor,
-  $fillHighlight1,
-  $fillHighlight2,
-  $width,
-  $height
-) {
-  $steps: $intensity;
-
-  // Ensure the @keyframes are generated at the root level
-  @at-root {
-    // We need two different ones
-    @for $i from 1 through 2 {
-      @keyframes #{$name}-anim-#{$i} {
-        @for $i from 0 through $steps {
-          $top: random(100);
-          $bottom: random(101 - $top);
-          #{percentage($i*(1/$steps))} {
-            clip-path: inset(#{$top}% 0 #{$bottom}% 0);
-          }
-        }
-      }
-    }
-  }
-
-  svg {
-    fill: $fillColor;
-    width: $width + px;
-    height: $height + px;
-  }
-  svg:nth-child(2),
-  svg:nth-child(3) {
-  }
-  svg:nth-child(2) {
-    fill: $fillHighlight1;
-    left: -2px;
-    animation: #{$name}-anim-1 2s infinite linear alternate-reverse;
-  }
-  svg:nth-child(3) {
-    fill: $fillHighlight2;
-    left: 2px;
-    animation: #{$name}-anim-2 3s infinite linear alternate-reverse;
-  }
 }

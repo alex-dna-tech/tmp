@@ -1,25 +1,25 @@
-import './svg/'
 import './styles/styles.scss'
-
-///////////////////////////////////////////////////////////////////////////////
-// MAIN
-///////////////////////////////////////////////////////////////////////////////
 import Typed from 'typed.js'
+
 const load = () => {
-  // var typed = new Typed('.typed', {
-  //   strings: ['First sentence.', 'Second sentence.'],
-  //   typeSpeed: 30
-  // })
-  var typed2 = new Typed('#printer', {
-    stringsElement: '#printer-string',
+  const typedText = new Typed('#printer', {
+    stringsElement: '#printer-strings',
     typeSpeed: 0,
-    backSpeed: 0,
+    backDelay: 1000,
     fadeOut: true,
     fadeOutDelay: 0,
-
-    // backDelay: 5000,
-    showCursor: true,
-    loop: true
+    loop: true,
+    showCursor: false,
+    cursorChar: '&nbsp;#',
+    preStringTyped: (pos, self) => {
+      console.log(pos)
+      if (pos > 1) {
+        self.typeSpeed = 20
+        self.fadeOut = false
+      } else if (pos == 2) {
+        self.fadeOut = true
+      }
+    }
   })
 }
 
