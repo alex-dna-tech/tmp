@@ -20,14 +20,47 @@
   animation: scanline 5s linear infinite;
 }
 
-fieldset {
-  height: 100%;
+.fieldset {
+  height: 85%;
   border: 6px #fff double;
+  border-top: none;
   position: relative;
-  overflow: hidden;
+  padding: 0 16px 16px;
+  margin: 28px 0 28px;
 
-  .logo {
-    padding: 1rem;
+  .legend {
+    margin: 0 -22px 22px;
+    transform: translate(0, -23px);
+
+    span {
+      float: left;
+      padding: 0 1rem;
+      margin: -1rem 0;
+    }
+
+    &::before,
+    &::after {
+      content: '';
+      height: 8px;
+    }
+
+    &::before {
+      border-top: 6px double #fff;
+      border-left: 6px double #fff;
+      float: left;
+      margin: 10px 0 0;
+      width: 8px;
+    }
+
+    &::after {
+      border-top: 6px double #fff;
+      border-right: 6px double #fff;
+      position: relative;
+      display: block;
+      left: 0;
+      top: 10px;
+      overflow: hidden;
+    }
   }
 
   .sign {
