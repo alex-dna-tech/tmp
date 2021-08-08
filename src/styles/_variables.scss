@@ -2,22 +2,24 @@ $background-color: #000;
 $color: #fff;
 $base-unit: 25rem;
 $font-size: 1.5rem;
+$primary-color: black;
+$secondary-color: #888;
 $interlace-background: linear-gradient(#777 50%, #000 50%);
 $interlace-size: 5px;
 $scanline-background: linear-gradient(
   to bottom,
   transparent 0%,
-  rgba(255, 250, 250, 0.75) 50%,
-  rgba(100, 255, 100, 0.75) 50%,
+  transparentize($color, 0.25) 50%,
+  transparentize($secondary-color, 0.25) 75%,
   transparent 100%
 );
 $shadow-glow: 0 0 4px #c8c8c8;
 $output-font-family: 'Chakra Petch';
-$output-color: rgba(24, 255, 98, 1);
-$output-text-shadow: rgba(10, 255, 10, 0.8);
+$output-color: $primary-color;
+$output-text-shadow: transparentize($secondary-color, 0.2);
 $output-line-height: 1.25;
-$gradient-bottom: rgb(0, 30, 30);
-$gradient-inner: #0f7;
+$gradient-bottom: $primary-color;
+$gradient-inner: $secondary-color;
 
 @mixin fit($top: 0, $left: 0, $right: 0, $bottom: 0) {
   position: absolute;
