@@ -1,7 +1,7 @@
 $background-color: #000;
 $color: #fff;
 $base-unit: 25rem;
-$font-size: 1.5rem;
+$font-size: 16px;
 $primary-color: black;
 $secondary-color: #888;
 $interlace-background: linear-gradient(#777 50%, #000 50%);
@@ -14,7 +14,7 @@ $scanline-background: linear-gradient(
   transparent 100%
 );
 $shadow-glow: 0 0 4px #c8c8c8;
-$output-font-family: 'Chakra Petch';
+$output-font-family: 'Ubuntu Mono';
 $output-color: $primary-color;
 $output-text-shadow: transparentize($secondary-color, 0.2);
 $output-line-height: 1.25;

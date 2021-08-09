@@ -2,24 +2,25 @@ import './styles/styles.scss'
 import Typed from 'typed.js'
 
 const load = () => {
-  const typedText = new Typed('#printer', {
-    stringsElement: '#printer-strings',
+  const intro = new Typed('#printer-intro', {
+    stringsElement: '#intro',
+    typeSpeed: 0,
+    fadeOut: true,
+    fadeOutDelay: 20,
+    loop: false,
+    showCursor: false,
+    cursorChar: ''
+  })
+
+  const strings = new Typed('#printer-strings', {
+    stringsElement: '#strings',
+    startDelay: 1500,
+    smartBackspace: true,
     typeSpeed: 0,
     backDelay: 1000,
-    fadeOut: true,
-    fadeOutDelay: 0,
     loop: true,
     showCursor: true,
-    cursorChar: '&nbsp;#',
-    preStringTyped: (pos, self) => {
-      console.log(pos)
-      if (pos > 1) {
-        self.typeSpeed = 20
-        self.fadeOut = false
-      } else if (pos == 2) {
-        self.fadeOut = true
-      }
-    }
+    cursorChar: '&nbsp;#'
   })
 }
 
