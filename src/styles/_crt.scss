@@ -80,26 +80,28 @@
   }
 }
 
+#printer-intro,
 #printer-strings {
   font-size: $font-size;
   margin: 0;
 }
+
+.typed-cursor {
+  font-size: $font-size;
+}
+
 .intro {
   overflow: hidden;
-  #printer-intro {
-    font-size: $font-size;
-  }
+  white-space: nowrap;
+}
 
-  .typed-cursor {
-    font-size: $font-size;
-  }
+#intro,
+#strings {
+  display: none;
 }
 
 @media screen and (max-width: 380px) {
   img.logo {
     width: 200px;
-  }
-  #intro {
-    display: none;
   }
 }
