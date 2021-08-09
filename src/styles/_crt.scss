@@ -94,3 +94,12 @@
     font-size: $font-size;
   }
 }
+
+@media screen and (max-width: 380px) {
+  img.logo {
+    width: 200px;
+  }
+  #intro {
+    display: none;
+  }
+}
