@@ -83,28 +83,14 @@
 #printer-strings {
   font-size: $font-size;
   margin: 0;
-  padding-top: 1rem;
 }
-
-@media screen and (max-width: 1100px) {
+.intro {
+  overflow: hidden;
   #printer-intro {
-    font-size: $font-size / 1.5;
-  }
-}
-
-@media screen and (max-width: 820px) {
-  #printer-intro {
-    font-size: $font-size / 2;
-  }
-}
-
-@media screen and (max-width: 440px) {
-  #printer-strings {
-    font-size: $font-size / 2;
+    font-size: $font-size;
   }
 
-  #printer-intro {
-    font-size: $font-size / 6;
-    line-height: 0.5;
+  .typed-cursor {
+    font-size: $font-size;
   }
 }

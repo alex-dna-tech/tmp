@@ -14,7 +14,7 @@ const load = () => {
 
   const strings = new Typed('#printer-strings', {
     stringsElement: '#strings',
-    startDelay: 1500,
+    startDelay: 2000,
     smartBackspace: true,
     typeSpeed: 0,
     backDelay: 1000,
